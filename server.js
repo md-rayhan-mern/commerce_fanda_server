@@ -21,7 +21,7 @@ app.use(
 const PORT = process.env.PORT || 5000;
 
 //all router
-app.use("/api", main_router);
+app.use("/", main_router);
 app.get("/api/status", (req, res) => {
   const currentMode = process.env.NODE_ENV || "development";
   res.status(200).json({
