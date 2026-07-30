@@ -52,9 +52,43 @@ const productSchema = new mongoose.Schema({
   brand: {
     type: [String],
     required: true
+  },
+  stock : {
+  quantity: {
+    type: Number,
+    required: true,
+    min: [0, 'Stock cannot be negative'],
+    default: 0
+  },
+  status: {
+  type: String,
+  enum: ['IN_STOCK', 'OUT_TO_STOCK', 'LOW_STOCK'],
+  default: 'IN_STOCK'
+}
+},
+
+offer: {
+  discountPercent: {
+    type: Number,
+    min: 0,
+    max: 100,
+    default: 0
+  },
+  startDate: {
+    type: Date,
+    default: null
+  },
+  endDate: {
+    type: Date,
+    default: null
   }
-}, {
+}
+}, 
+
+{
   timestamps: true 
 });
+// কোয়েরি ফাস্ট করার জন্য ইনডেক্সিং
+productSchema.index({ 'offer.endDate': 1 });
 
  export default mongoose.model('Product', productSchema);
