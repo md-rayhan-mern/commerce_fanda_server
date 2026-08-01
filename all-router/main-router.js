@@ -3,7 +3,6 @@ import user_route from "./user-router/user-router.js";
 
 import { productRouter } from "./product-routes/product.route.js";
 import { faqRouter } from "./faq/faqRoutes.js";
-import {productRouter} from "./product-routes/product.route.js"
 
 const main = Router();
 const moduleRoutes = [

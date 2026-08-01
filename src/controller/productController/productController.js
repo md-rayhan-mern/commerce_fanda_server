@@ -3,6 +3,7 @@ import { ApiResponse } from "../../../utils/apiResponse/apiResponse.js";
 import { asyncRapper } from "../../../utils/asyncRapper/rapper.js";
 import { AppError } from "../../../utils/customAppError/customError.js";
 import { getProductService } from "../../services/productService/productService.js";
+import { modifyProduct } from "../../services/productService/productUpadteService.js";
 
 export const addProduct = asyncRapper(async (req, res, next) => {
     // ০. req.body থেকে ডেটা নেওয়া
@@ -60,11 +61,21 @@ export const getProductsPagination = asyncRapper(async (req , res, next) => {
 
 export const getProductsById = asyncRapper(async (req , res, next) => {
     const productId = req.params.id;
-    
-    const product = await ProductSchema.findById({_id : productId});
+    const product = await ProductSchema.findById({_id : productId}).populate("faqs");
     
     if(!product) {
         return next(new AppError(`Do not find out ${productId} id product`, 404));
     }
     res.status(200).json(new ApiResponse(200, product, "Product fatched successfully", ));
-})
+});
+export const updateProductFields = asyncRapper(async (req , res , next) => {
+    const {id } = req.params;
+    const updateData = req.body;
+    console.log(updateData);
+    
+        const updatedProduct = await modifyProduct(id, updateData);
+        if(!updatedProduct){
+            throw new AppError("এই আইডি দিয়ে কোনো প্রোডাক্ট পাওয়া যায়নি!", 404);
+        };
+        res.status(201).json(new ApiResponse(201, updatedProduct, "প্রোডাক্ট সফলভাবে আপডেট করা হয়েছে।"))
+});
