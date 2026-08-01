@@ -10,7 +10,8 @@ export const getProductService = async (query) => {
   const products = await ProductSchema.find()
     .sort({ createdAt: -1 })
     .skip(skip)
-    .limit(limit);
+    .limit(limit)
+    .populate("faqs");
 
   const totalProducts = await ProductSchema.countDocuments();
 

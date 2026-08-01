@@ -10,6 +10,6 @@ export const faqCotroller = asyncRapper(async (req , res , next) => {
     
     const ctrateFaq = await postFAQ(product, Q );
 
-    res.status(201).json(new ApiResponse(201, ctrateFaq, "Answer created Successfully"))
+    res.status(201).json(new ApiResponse(201, ctrateFaq, "Question created Successfully"))
     
 })
