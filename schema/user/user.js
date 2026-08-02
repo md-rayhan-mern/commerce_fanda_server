@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, "পাসওয়ার্ড দেওয়া अनिवार्य"],
+    required: [true, "পাসওয়ার্ড দেওয়া জরুরি"],
     minlength: [6, "পাসওয়ার্ড অন্তত ৬ অক্ষরের হতে হবে"],
   },
   gender: {
@@ -56,13 +56,13 @@ const userSchema = new mongoose.Schema({
         enum: ["Home", "Office", "Other"],
         default: "Home",
       },
-      receiverName: { type: String, trim: true }, // পণ্যটি কে রিসিভ করবে
-      receiverPhone: { type: String, trim: true },
-      division: { type: String, required: true }, // বিভাগ
-      district: { type: String, required: true }, // জেলা
-      thana: { type: String, required: true }, // থানা বা উপজেলা
+      // receiverName: { type: String, trim: true }, // পণ্যটি কে রিসিভ করবে
+      // receiverPhone: { type: String, trim: true },
+      // division: { type: String, required: true }, // বিভাগ
+      // district: { type: String, required: true }, // জেলা
+      // thana: { type: String, required: true }, // থানা বা উপজেলা
       areaDetails: { type: String, required: true }, // গ্রাম/রোড/ফ্ল্যাট নম্বর
-      postCode: { type: String, trim: true }, // পোস্টাল কোড
+      //postCode: { type: String, trim: true }, // পোস্টাল কোড
     },
   ],
 
@@ -86,9 +86,8 @@ const userSchema = new mongoose.Schema({
 });
 
 // প্রতিবার ডাটা আপডেট হলে স্বয়ংক্রিয়ভাবে updatedAt সময় পরিবর্তন করার জন্য
-userSchema.pre("save", function (next) {
+userSchema.pre("save", function () {
   this.updatedAt = Date.now();
-  next();
 });
 
 export default mongoose.model("User", userSchema);

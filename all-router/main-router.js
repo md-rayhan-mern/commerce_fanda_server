@@ -1,5 +1,5 @@
 import { Router } from "express";
-import user_route from "./user-router/user-router.js";
+import {userRouter} from "./user-router/user-router.js";
 
 import { productRouter } from "./product-routes/product.route.js";
 import { faqRouter } from "./faq/faqRoutes.js";
@@ -7,8 +7,8 @@ import { faqRouter } from "./faq/faqRoutes.js";
 const main = Router();
 const moduleRoutes = [
   {
-    path: "/api/v1",
-    route: user_route,
+    path: "/api/v1/user",
+    route: userRouter,
   },
   {
     path: "/api/v1/product",

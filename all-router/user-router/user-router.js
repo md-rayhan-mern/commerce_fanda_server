@@ -1,10 +1,9 @@
 import { Router } from "express";
+import {userController, userUpdateController} from "../../src/controller/userController/userController.js";
 
-const user = Router();
-user.get("/user", (req, res, next) => {
-  res.status(200).json({
-    data: "this is successfull data",
-    status: "success",
-  });
-});
-export default user;
+export const userRouter = Router();
+
+
+userRouter.post("/create", userController);
+userRouter.patch("/update/:id", userUpdateController); 
+
