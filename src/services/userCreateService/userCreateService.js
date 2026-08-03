@@ -2,7 +2,7 @@ import User from "../../../schema/user/user.js";
 import {AppError} from "../../../utils/customAppError/customError.js";
 
 export const userService = async (userData) => {
-    const {name , phone, email, password, addressType, areaDetails} = userData;
+    const {name , phone, email, password, addressType, areaDetails, role, profilePicture, birthDate,isVerified,isActive,gender} = userData;
 
     const existingUser = await User.findOne({
         $or: [{email: email.toLowerCase()}, {phone: phone}]

@@ -28,10 +28,10 @@ const userSchema = new mongoose.Schema({
   gender: {
     type: String,
     enum: {
-      values: ["Male", "Female", "Other", "Not Specified"],
+      values: ["Male", "Female", "Other", ],
       message: "জেন্ডার অবশ্যই Male, Female অথবা Other হতে হবে",
     },
-    default: "Not Specified", // শুরুতে ফাঁকা থাকলে এটি সেট হবে
+    default: "Other", // শুরুতে ফাঁকা থাকলে এটি সেট হবে
   },
   role: {
     type: String,
