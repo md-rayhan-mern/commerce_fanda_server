@@ -9,10 +9,9 @@ export const loginController = asyncRapper(async (req, res, next) => {
 
 
     const response = await loginService(identifier, password);
-    if(!response) {
-        return res.status(response.statusCode).json(new ApiResponse(false, response.message, null));
-    };
+
+    
     const resUser = response.toObject();
     delete resUser.password;
-    res.status(200).json(new ApiResponse(200, resUser, "Login successful" ));
+    res.status(200).json(new ApiResponse(200, resUser, "Login successfully" ));
 });

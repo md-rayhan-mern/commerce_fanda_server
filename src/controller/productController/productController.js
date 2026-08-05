@@ -46,7 +46,7 @@ export const addProduct = asyncRapper(async (req, res, next) => {
 });
 
 export const getProductsPagination = asyncRapper(async (req , res, next) => {
-    console.log(req.query);
+    //console.log(req.query);
     
     // ১. রিকোয়েস্ট কুয়েরি (req.query) সার্ভিস ফাংশনে পাঠানো
     const result = await getProductService(req.query);

@@ -30,7 +30,7 @@ export const userService = async (userData) => {
 
 //userUpdate Service
 export const userUpdateService = async (userId, updateData) => {
-    const {email, phone} = updateData;
+    const {email, phone,addresses} = updateData;
 console.log(userId);
 console.log("Update Data:", updateData);
     if(email || phone) {
@@ -48,11 +48,39 @@ console.log("Update Data:", updateData);
             }
     }
 
+        // ২. অ্যাড্রেস হ্যান্ডেল করার প্রফেশনাল লজিক
+    if (addresses && addresses.length > 0) {
+        const targetAddress = addresses[0]; // ফ্রন্টএন্ড থেকে পাঠানো অ্যাড্রেস অবজেক্ট
+
+        if (targetAddress._id) {
+            // 👉 কেস এ: যদি _id থাকে, তার মানে নির্দিষ্ট অ্যাড্রেসটি UPDATE করতে হবে
+            await User.updateOne(
+                { _id: userId, "addresses._id": targetAddress._id },
+                { 
+                    $set: { 
+                        "addresses.$.addressType": targetAddress.addressType,
+                        "addresses.$.areaDetails": targetAddress.areaDetails
+                        // ভবিষ্যতে অন্য ফিল্ড অন করলে সেগুলোও এখানে কমা দিয়ে যোগ করবেন
+                    } 
+                }
+            );
+        } else {
+            // 👉 কেস বি: যদি _id না থাকে, তার মানে নতুন অ্যাড্রেস ADD/PUSH করতে হবে
+            await User.findByIdAndUpdate(userId, {
+                $push: { addresses: targetAddress }
+            });
+        }
+        
+        // addresses ফিল্ডটি মূল updateData থেকে ডিলেট করে দিচ্ছি, 
+        // যেন নিচে আবার $set হয়ে ওভাররাইট না হয়ে যায়।
+        delete updateData.addresses;
+    }
+
     const updatedUser  = await User.findByIdAndUpdate(userId, {
         $set: {
             ...updateData
         }
-    }, {new: true, runValidators: true});
+    }, {returnDocument: 'after', runValidators: true});
 
    if(!updatedUser) {
     throw new AppError("User not found", 404);

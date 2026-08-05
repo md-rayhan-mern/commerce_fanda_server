@@ -17,7 +17,7 @@ export const loginService = async (identifier, password) => {
     );
 
     if(!user) {
-        throw new AppError("User not found", 404);
+        throw new AppError("User not found this email or phone", 404);
     };
     if(user.password !== password){
         throw new AppError("Invalid password", 401);

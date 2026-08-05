@@ -35,8 +35,8 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ["customer", "seller", "admin"],
-    default: "customer",
+    enum: ["Customer", "Seller", "Admin"],
+    default: "Customer",
   },
 
   // ২. প্রোফাইল সেকশন (ইউজার পরে এডিট করে এগুলো পূরণ করবে)
