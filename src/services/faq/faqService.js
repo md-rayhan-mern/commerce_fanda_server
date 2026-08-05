@@ -2,9 +2,9 @@ import faqsSchema from "../../../schema/faqs/faqsSchema.js";
 import productSchema from "../../../schema/product/product.js";
 import { AppError } from "../../../utils/customAppError/customError.js";
 
-export const postFAQ = async (productId, Q) => {
+export const postFAQ = async (productId,userId, Q) => {
 
-  if (!productId || !Q) {
+  if (!productId || !Q || !userId) {
     throw new AppError("দয়া করে productId, এবং question প্রদান করুন।");
   }
 
@@ -13,7 +13,7 @@ export const postFAQ = async (productId, Q) => {
     throw new AppError("এই আইডি-র কোনো প্রোডাক্ট খুঁজে পাওয়া যায়নি।", 404);
   }
 
-  const newFaq = await faqsSchema.create({ product: productId, Q });
+  const newFaq = await faqsSchema.create({ product: productId, Q: Q, user:  userId});
   await productSchema.findByIdAndUpdate(productId, {
     $push: { faqs: newFaq._id },
   });

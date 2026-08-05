@@ -3,7 +3,10 @@ import ProductSchema from "../../../schema/product/product.js";
 export const getProductService = async (query) => {
   // ১. কুয়েরি থেকে পেজ এবং লিমিট নেওয়া (ডিফল্ট পেজ = ১, লিমিট = ১০)
   const page = Number(query.page) || 1;
-  const limit = Number(query.limit) || 10;
+  const limit = Number(query.limit) || 12;
+  console.log(page);
+  console.log(limit);
+  
   // ২. কতগুলো ডাটা স্কিপ (বাদ) করতে হবে তার হিসাব
   const skip = (page - 1) * limit;
   // ৩. ডাটাবেজ থেকে ডাটা খোঁজা এবং মোট প্রোডাক্টের সংখ্যা বের করা
