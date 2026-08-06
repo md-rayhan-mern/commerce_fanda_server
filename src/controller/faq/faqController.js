@@ -4,12 +4,14 @@ import { asyncRapper } from "../../../utils/asyncRapper/rapper.js";
 import { AppError } from "../../../utils/customAppError/customError.js";
 
 export const faqCotroller = asyncRapper(async (req , res , next) => {
+    const userId = req.session?.userId;
     const {product, Q} = req.body;
     console.log(product);
     console.log(Q);
+    console.log(userId);
     
-    const ctrateFaq = await postFAQ(product, Q );
+    const createFaq = await postFAQ(product, userId, Q );
 
-    res.status(201).json(new ApiResponse(201, ctrateFaq, "Question created Successfully"))
+    res.status(201).json(new ApiResponse(201, createFaq, "Question created Successfully"))
     
 })

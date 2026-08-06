@@ -9,9 +9,17 @@ export const loginController = asyncRapper(async (req, res, next) => {
 
 
     const response = await loginService(identifier, password);
+    console.log(response._id);
+    
+    req.session.userId = response._id;
+        const resUser = response.toObject();
+        delete resUser.password;
+    // 💡 এটি নিশ্চিত করবে যে কুকি পাঠানোর আগেই সেশন ডাটাবেজে সেভ হয়েছে
+    req.session.save((err) => {
+        if (err) return next(err);
+        res.status(200).json(new ApiResponse(200, resUser, "Login successfully" ));
+    });
 
     
-    const resUser = response.toObject();
-    delete resUser.password;
-    res.status(200).json(new ApiResponse(200, resUser, "Login successfully" ));
+    
 });

@@ -1,5 +1,6 @@
-import express from "express";
+import express, { urlencoded } from "express";
 import cors from "cors";
+import session from "express-session";
 import { AppError } from "./utils/customAppError/customError.js";
 import { corsOptions } from "./config/corsOptions.js";
 import { connectDB } from "./config/DB.js";
@@ -18,25 +19,29 @@ app.use(
     verify: (req, res, buf, encoding) => {},
   }),
 );
-const PORT = process.env.PORT || 5000;
+app.use(express.urlencoded({extended: true}));
+app.use(session({
+  secret: process.env.SESSION_SECRET || "my_super_safe_development_secret_key_123",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false,
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000,
+  }
+}));
 
 //all router
 app.use("/", main_router);
-app.get("/api/status", (req, res) => {
-  const currentMode = process.env.NODE_ENV || "development";
-  res.status(200).json({
-    statue: "success",
-    message: "Server runing ok",
-    mode: currentMode,
-    timeStamp: new Date(),
-  });
-});
+
 //404 route
 app.all("*any", (req, res, next) => {
   throw new AppError(`Not found route ${req.originalUrl}`, 404);
 });
 //global errorHandler
 app.use(globalError);
+
+const PORT = process.env.PORT || 5000;
 const startServer = async () => {
   try {
     await connectDB();

@@ -1,13 +1,16 @@
-import Product from "../../../schema/user/user.js";
+import User from "../../../schema/user/user.js";
 import {AppError} from "../../../utils/customAppError/customError.js";
 
 export const loginService = async (identifier, password) => {
+    console.log(identifier);
+    console.log(password);
+    
 
     if(!identifier || !password) {
         throw new AppError("Identifier and password are required", 400);
     }
     //DB  quiry to find user by email or phone
-    const user = await Product.findOne(
+    const user = await User.findOne(
         {
             $or: [
                 { email: identifier },
