@@ -2,8 +2,8 @@ import User from "../../../schema/user/user.js";
 import {AppError} from "../../../utils/customAppError/customError.js";
 
 export const loginService = async (identifier, password) => {
-    console.log(identifier);
-    console.log(password);
+    // console.log(identifier);
+    // console.log(password);
     
 
     if(!identifier || !password) {

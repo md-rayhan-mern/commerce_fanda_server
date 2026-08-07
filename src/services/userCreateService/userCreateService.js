@@ -31,8 +31,8 @@ export const userService = async (userData) => {
 //userUpdate Service
 export const userUpdateService = async (userId, updateData) => {
     const {email, phone,addresses} = updateData;
-console.log(userId);
-console.log("Update Data:", updateData);
+// console.log(userId);
+// console.log("Update Data:", updateData);
     if(email || phone) {
         const query = [];
         if(email) query.push({email: email.toLowerCase()})

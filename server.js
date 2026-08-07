@@ -6,6 +6,7 @@ import { corsOptions } from "./config/corsOptions.js";
 import { connectDB } from "./config/DB.js";
 import globalError from "./error_middleware/error.js";
 import main_router from "./all-router/main-router.js";
+import mongoDBconnect from "connect-mongo";
 
 const app = express();
 app.use(cors(corsOptions));
@@ -20,14 +21,21 @@ app.use(
   }),
 );
 app.use(express.urlencoded({extended: true}));
+
 app.use(session({
   secret: process.env.SESSION_SECRET || "my_super_safe_development_secret_key_123",
   resave: false,
   saveUninitialized: false,
+  store: mongoDBconnect.create({
+    mongoUrl: process.env.DBURI || "mongodb://localhost:27017/db_1",
+    collectionName: "user_sessions",
+    ttl: 30 * 24 * 60 * 60,
+  }),
   cookie: {
     secure: false,
     httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000,
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+     sameSite: "lax"
   }
 }));
 

@@ -3,8 +3,8 @@ import productSchema from "../../../schema/product/product.js";
 import { AppError } from "../../../utils/customAppError/customError.js";
 
 export const postFAQ = async (productId, userId, Q) => {
-  console.log(productId);
-  console.log(Q);
+  // console.log(productId);
+  // console.log(Q);
   
 //--------------//
   if(!productId ){
