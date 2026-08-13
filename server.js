@@ -24,18 +24,19 @@ app.use(express.urlencoded({extended: true}));
 
 app.use(session({
   secret: process.env.SESSION_SECRET || "my_super_safe_development_secret_key_123",
-  resave: false,
-  saveUninitialized: false,
+  resave: true,
+  saveUninitialized: true,
   store: mongoDBconnect.create({
     mongoUrl: process.env.DBURI || "mongodb://localhost:27017/db_1",
     collectionName: "user_sessions",
-    ttl: 30 * 24 * 60 * 60,
+    ttl: 60, //30 * 24 * 60 * 60,
+    autoRemove: 'native' // এটি দিলে মঙ্গোডিবি নিজ দায়িত্বে ১ মিনিট পর ডাটা ডিলিট করবে
   }),
   cookie: {
     secure: false,
     httpOnly: true,
-    maxAge: 30 * 24 * 60 * 60 * 1000,
-     sameSite: "lax"
+    maxAge: 60 * 1000,  //testing purpose                 //30 * 24 * 60 * 60 * 1000,
+    sameSite: "lax"
   }
 }));
 
