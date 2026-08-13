@@ -29,13 +29,13 @@ app.use(session({
   store: mongoDBconnect.create({
     mongoUrl: process.env.DBURI || "mongodb://localhost:27017/db_1",
     collectionName: "user_sessions",
-    ttl: 60, //30 * 24 * 60 * 60,
+    ttl: 60, //7 * 24 * 60 * 60, //30 * 24 * 60 * 60,
     autoRemove: 'native' // এটি দিলে মঙ্গোডিবি নিজ দায়িত্বে ১ মিনিট পর ডাটা ডিলিট করবে
   }),
   cookie: {
     secure: false,
     httpOnly: true,
-    maxAge: 60 * 1000,  //testing purpose                 //30 * 24 * 60 * 60 * 1000,
+    maxAge: 60 * 1000, //7 * 24 * 60 * 60 * 1000  //testing purpose                 //30 * 24 * 60 * 60 * 1000,
     sameSite: "lax"
   }
 }));
