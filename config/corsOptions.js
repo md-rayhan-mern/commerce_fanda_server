@@ -1,6 +1,6 @@
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(",")
-  : ["http://localhost:5173"];
+  : ["http://localhost:5173", "http://localhost:3000"];
 
 export const corsOptions = {
   origin: (origin, callback) => {
@@ -14,6 +14,6 @@ export const corsOptions = {
   },
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization"],
-  credential: true,
+  credentials: true,
   optionsSuccessStatus: 200,
 };
