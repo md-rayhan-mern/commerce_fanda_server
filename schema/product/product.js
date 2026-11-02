@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 62c724357e5c7a33315d1f03558b25441a366cfc
 import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
@@ -93,4 +97,8 @@ const productSchema = new mongoose.Schema(
 // কোয়েরি ফাস্ট করার জন্য ইনডেক্সিং
 productSchema.index({ "offer.endDate": 1 });
 
+<<<<<<< HEAD
 export default mongoose.model("Product", productSchema);
+=======
+export default mongoose.model("Product", productSchema);
+>>>>>>> 62c724357e5c7a33315d1f03558b25441a366cfc

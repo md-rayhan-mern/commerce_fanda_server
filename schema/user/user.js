@@ -22,12 +22,17 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
+<<<<<<< HEAD
     required: [true, "পাসওয়ার্ড দেওয়া अनिवार्य"],
+=======
+    required: [true, "পাসওয়ার্ড দেওয়া জরুরি"],
+>>>>>>> 62c724357e5c7a33315d1f03558b25441a366cfc
     minlength: [6, "পাসওয়ার্ড অন্তত ৬ অক্ষরের হতে হবে"],
   },
   gender: {
     type: String,
     enum: {
+<<<<<<< HEAD
       values: ["Male", "Female", "Other", "Not Specified"],
       message: "জেন্ডার অবশ্যই Male, Female অথবা Other হতে হবে",
     },
@@ -37,6 +42,17 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ["customer", "seller", "admin"],
     default: "customer",
+=======
+      values: ["Male", "Female", "Other", ],
+      message: "জেন্ডার অবশ্যই Male, Female অথবা Other হতে হবে",
+    },
+    default: "Other", // শুরুতে ফাঁকা থাকলে এটি সেট হবে
+  },
+  role: {
+    type: String,
+    enum: ["Customer", "Seller", "Admin"],
+    default: "Customer",
+>>>>>>> 62c724357e5c7a33315d1f03558b25441a366cfc
   },
 
   // ২. প্রোফাইল সেকশন (ইউজার পরে এডিট করে এগুলো পূরণ করবে)
@@ -56,6 +72,7 @@ const userSchema = new mongoose.Schema({
         enum: ["Home", "Office", "Other"],
         default: "Home",
       },
+<<<<<<< HEAD
       receiverName: { type: String, trim: true }, // পণ্যটি কে রিসিভ করবে
       receiverPhone: { type: String, trim: true },
       division: { type: String, required: true }, // বিভাগ
@@ -63,6 +80,15 @@ const userSchema = new mongoose.Schema({
       thana: { type: String, required: true }, // থানা বা উপজেলা
       areaDetails: { type: String, required: true }, // গ্রাম/রোড/ফ্ল্যাট নম্বর
       postCode: { type: String, trim: true }, // পোস্টাল কোড
+=======
+      // receiverName: { type: String, trim: true }, // পণ্যটি কে রিসিভ করবে
+      // receiverPhone: { type: String, trim: true },
+      // division: { type: String, required: true }, // বিভাগ
+      // district: { type: String, required: true }, // জেলা
+      // thana: { type: String, required: true }, // থানা বা উপজেলা
+      areaDetails: { type: String, required: true }, // গ্রাম/রোড/ফ্ল্যাট নম্বর
+      //postCode: { type: String, trim: true }, // পোস্টাল কোড
+>>>>>>> 62c724357e5c7a33315d1f03558b25441a366cfc
     },
   ],
 
@@ -86,9 +112,14 @@ const userSchema = new mongoose.Schema({
 });
 
 // প্রতিবার ডাটা আপডেট হলে স্বয়ংক্রিয়ভাবে updatedAt সময় পরিবর্তন করার জন্য
+<<<<<<< HEAD
 userSchema.pre("save", function (next) {
   this.updatedAt = Date.now();
   next();
+=======
+userSchema.pre("save", function () {
+  this.updatedAt = Date.now();
+>>>>>>> 62c724357e5c7a33315d1f03558b25441a366cfc
 });
 
 export default mongoose.model("User", userSchema);

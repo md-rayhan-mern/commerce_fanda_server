@@ -1,10 +1,20 @@
+<<<<<<< HEAD
 import express from "express";
 import cors from "cors";
+=======
+import express, { urlencoded } from "express";
+import cors from "cors";
+import session from "express-session";
+>>>>>>> 62c724357e5c7a33315d1f03558b25441a366cfc
 import { AppError } from "./utils/customAppError/customError.js";
 import { corsOptions } from "./config/corsOptions.js";
 import { connectDB } from "./config/DB.js";
 import globalError from "./error_middleware/error.js";
 import main_router from "./all-router/main-router.js";
+<<<<<<< HEAD
+=======
+import mongoDBconnect from "connect-mongo";
+>>>>>>> 62c724357e5c7a33315d1f03558b25441a366cfc
 
 const app = express();
 app.use(cors(corsOptions));
@@ -18,6 +28,7 @@ app.use(
     verify: (req, res, buf, encoding) => {},
   }),
 );
+<<<<<<< HEAD
 const PORT = process.env.PORT || 5000;
 
 //all router
@@ -31,12 +42,42 @@ app.get("/api/status", (req, res) => {
     timeStamp: new Date(),
   });
 });
+=======
+app.use(express.urlencoded({extended: true}));
+
+app.use(session({
+  secret: process.env.SESSION_SECRET || "my_super_safe_development_secret_key_123",
+  resave: true,
+  saveUninitialized: true,
+  store: mongoDBconnect.create({
+    mongoUrl: process.env.DBURI || "mongodb://localhost:27017/db_1",
+    collectionName: "user_sessions",
+    ttl:  7 * 24 * 60 * 60, //30 * 24 * 60 * 60,
+    autoRemove: 'native' // এটি দিলে মঙ্গোডিবি নিজ দায়িত্বে ১ মিনিট পর ডাটা ডিলিট করবে
+  }),
+  cookie: {
+    secure: false,
+    httpOnly: true,
+    maxAge:  7 * 24 * 60 * 60 * 1000 , //60 * 1000, //testing purpose                 //30 * 24 * 60 * 60 * 1000,
+    sameSite: "lax"
+  }
+}));
+
+//all router
+app.use("/", main_router);
+
+>>>>>>> 62c724357e5c7a33315d1f03558b25441a366cfc
 //404 route
 app.all("*any", (req, res, next) => {
   throw new AppError(`Not found route ${req.originalUrl}`, 404);
 });
 //global errorHandler
 app.use(globalError);
+<<<<<<< HEAD
+=======
+
+const PORT = process.env.PORT || 5000;
+>>>>>>> 62c724357e5c7a33315d1f03558b25441a366cfc
 const startServer = async () => {
   try {
     await connectDB();

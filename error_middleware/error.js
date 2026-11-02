@@ -6,10 +6,17 @@ const globalError = (err, req, res, next) => {
 
   err.statusCode = err.statusCode || 500;
   err.status = err.status || "error";
+<<<<<<< HEAD
   let error = { ...err };
   error.message = err.message;
   error.name = err.name;
   error.code = err.code; // মঙ্গুসের কোড ধরার জন্য এটি দরকার
+=======
+  //মঙ্গুস এররের জন্য সরাসরি অরিজিনাল err বা কাস্টম রেফারেন্স ব্যবহার করাই নিরাপদ
+  let error = err;
+  error.message = err.message;
+
+>>>>>>> 62c724357e5c7a33315d1f03558b25441a366cfc
 
   // ১. MongoDB Duplicate Key Error (যেমন: একই আইডি বা নাম বারবার দিলে)
   if (error.code === 11000) {
@@ -31,7 +38,11 @@ const globalError = (err, req, res, next) => {
 
   // ৩. MongoDB CastError (ভুল ডাটা টাইপ পাঠালে, যেমন: Number ফিল্ডে String দিলে)
   if (error.name === "CastError") {
+<<<<<<< HEAD
     error.message = `ভুল ডাটা ফরম্যাট! ${error.path} ফিল্ডে '${error.value}' ডাটাটি সঠিক নয়。`;
+=======
+    error.message = `ভুল ডাটা ফরম্যাট! ${error.path} ফিল্ডে '${error.value}' ডাটাটি সঠিক নয় ।`;
+>>>>>>> 62c724357e5c7a33315d1f03558b25441a366cfc
     error.statusCode = 400;
     error.status = "fail";
     error.isOperational = true;
@@ -50,7 +61,11 @@ const globalError = (err, req, res, next) => {
     // 💡 এখানে 'return' যোগ করা হয়েছে যেন কোড ডাবল রেসপন্স না পাঠায়
     return res.status(error.statusCode).json({
       status: error.status,
+<<<<<<< HEAD
       message: error.isOperational ? error.message : "Something went wrong", // 'want' টাইপোটি 'went' করা হয়েছে
+=======
+      message: error.isOperational ? error.message : "Something went wrong",
+>>>>>>> 62c724357e5c7a33315d1f03558b25441a366cfc
     });
   }
 };
